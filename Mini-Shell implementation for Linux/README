@@ -1,0 +1,27 @@
+MINI-SHELL
+Bînă Marius Andrei - bina.marius@gmail.com
+
+Am inceput prin a implementa comenzile mai "particulare" precum quit exit cd si adaugarea/modificarea unei variabile de mediu.
+Pentru exit/quit doar se apeleaza functia shell_exit si se returneaza rezultatul acesteia respectiv SHELL_EXIT.
+Pentru cd se fac verificari pentru redirectari (mentionez ca pentru redirectari am folosit din laborator functia do_redirect
+la care am adaugat campul io_flags care se gaseste si in simple_command pentru a cunoaste modul in care se face redirectarea)
+si unde este cazul se efectueaza o redirectare, apoi se apeleaza functia de shell_cd cu calea dorita, aceasta la randul ei
+apeleaza chdir pe calea primita.
+Pentru setarea sau modificarea variabilelor de mediu se verifica daca stringul comenzii primite contine "=", in cazul in care
+exista "=" se verifica urmatoarea "parte" (next_part), acolo se afla valoarea pe care vrem sa o dam variabilei de mediu, daca
+dupa egal nu exista nimic atunci se va intoarce eroare. In caz contrar, se apeleaza setenv folosind get_word pe valoarea primita
+deoarece e posibil sa se primeasca ceva ce contine la randul ei o variabila de mediu care trebuie expandata, de asemenea flagul
+de overwrite este setat la 1 pentru a modifica variabila daca aceasta deja exista.
+In continuare pentru restul comenzilor se va face fork iar in procesul copil se vor face din nou redirectari daca este cazul,
+dupa ce au fost verificate si efectuate redirectarile, se iau argumentele si se executa comanda folosind execvp, in cazul in
+care aceasta nu se efectueaza cu succes se va afisa mesaj de eroare. In procesul parinte se face wait dupa procesul copil.
+
+Pentru executarea in paralel am facut de doua ori fork pentru a avea doua procese copil si fiecare dintre acestea executa
+una din comenzi, iar procesul parinte astepta terminarea lor.
+
+Pentru executarea in pipe, am folosit apelul de sistem pipe() care foloseste doi file descriptori ( unul de citire si unul de
+scriere, one way ) pentru a efectua comunicarea. Unul din copii inchide capatul de citire, redirecteaza STDOUT catre capatul
+scriere, apoi inchide capatul de scriere si executa comanda, celalalt copil face procesul invers inchide capatul de scriere,
+redirecteaza STDIN catre capatul de citire, inchide capatul de citire si executa comanda. Procesul parinte asteapta terminarea
+copiilor.
+

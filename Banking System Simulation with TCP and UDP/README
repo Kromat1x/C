@@ -1,0 +1,39 @@
+Bina Marius Andrei - bina.marius@gmail.com
+
+Proiectul este bazat pe doua protocoale UDP si TCP si foloseste functiile din bibliotecile
+acestora.
+
+Client :
+In client multiplexez pentru a vedea daca se primeste de la server pe tcp, de la server pe
+udp sau de la stdin (consola). Pentru logare tin o variabila (un flag) sa stiu oricand
+daca sunt logat sau nu, in caz ca utilizatorul vrea sa se logheze si este deja logat, sa
+pot anunta acest lucru fara a mai trimite la server. Caz contrar, utilizatorul nu este logat,
+se trimite comanda mai departe la server unde se verifica corectitudinea datelor, daca
+vom primi inapoi "Welcome" modificam flagul de logare la 1 pentru ca logarea s-a efectuat
+cu succes. In ambele cazuri se retine ultimul numar de card folosit pentru logare pentru a
+fi folosit in cazul unui unlock. Pentru logout se reseteaza flagul de logare si se trimite
+mai departe la server pentru a semnala ca utilizatorul de pe socketul respectiv s-a delogat.
+Pentru functiile listsold, getmoney si putmoney functionalitatea este asemanatoare, se trimit
+la server care in functie de numele comenzii si parametrul ei daca exista trimite inapoi rezultatul.
+Pentru quit de la stdin in server se inchide socketul folosit si se anunta serverul ca se iese.
+Pentru cazul in care se primeste unlock se ataseaza numarul ultimului card folosit pentru login
+si se trimite la server, apoi serverul va trimite rezultatul.
+
+
+Server:
+Pentru server se multiplexeaza in acelasi fel ca la client, se verifica daca se primeste pe
+stdin, pe udp sau de la unul din clienti.
+Functionalitatea pentru login in server se bazeaza pe 4 variabile adaugate in structura
+(mistakes, blocked, socket si logged_flag). In functie de cazuri, cardul se va bloca atunci
+cand variabila mistakes ajune la 3, socket reprezinta socketul pe care este logat clientul.
+Pentru celelalte functii de tip listsold, getmoney si putmoney se verifica conditiile pentru
+al doilea parametru daca exista ( de tip suma ) si se trimite rezultatul la client. Pentru
+unlock primit pe udp, se verifica numarul de card atasat daca exista si daca este blocat si
+in mod normal se anunta clientul sa trimita parola secreta, in caz contrar se va trimite
+un mesaj de eroare, daca se asteapta parola secreta variabila pass_awaited va fi 1 si orice
+va veni in continuare pe udp va fi parola la care se ataseaza din nou numarul de card, acum
+din nou se verifica daca nu cumva cardul a fost deblocat de la un alt terminal intre timp
+si apoi se verifica corectitudinea parolei, in cazul in care este corecta se anunta clientul
+ca a fost delocat contul. In cazul in care se primeste quit la server de la stdin, se inchid
+toti clientii dupa care se inchid socketele de udp si tcp si se da return 0 pentru a inchide
+si programul de server.

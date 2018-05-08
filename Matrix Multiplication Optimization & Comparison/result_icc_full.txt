@@ -1,0 +1,113 @@
+rm -rf tema2_blas tema2_neopt tema2_opt_m tema2_opt_f
+icc -Wall -Werror -O0 solver_blas.c main.c /usr/lib64/atlas/libsatlas.so.3.10   -o tema2_blas	
+icc -Wall -Werror -O0 solver_neopt.c main.c /usr/lib64/atlas/libsatlas.so.3.10   -o tema2_neopt	
+icc -Wall -Werror -O0 solver_opt.c main.c /usr/lib64/atlas/libsatlas.so.3.10   -o tema2_opt_m	
+icc -Wall -Werror -O3  solver_neopt.c main.c /usr/lib64/atlas/libsatlas.so.3.10   -o tema2_opt_f
+-----OPT_M------
+OPT_M SOLVER
+TEST 1
+	Time: 4.738421
+OPT_M SOLVER
+TEST 2
+	Time: 7.974349
+OPT_M SOLVER
+TEST 3
+	Time: 12.300850
+OPT_M SOLVER
+TEST 4
+	Time: 19.348207
+OPT_M SOLVER
+TEST 5
+	Time: 27.596001
+Checking if ERROR < 0.001...:
+Test1:
+SUCCESS!
+Test2:
+SUCCESS!
+Test3:
+SUCCESS!
+Test4:
+SUCCESS!
+Test5:
+SUCCESS!
+-----OPT_F------
+NEOPT SOLVER
+TEST 1
+	Time: 1.722681
+NEOPT SOLVER
+TEST 2
+	Time: 2.874223
+NEOPT SOLVER
+TEST 3
+	Time: 4.605141
+NEOPT SOLVER
+TEST 4
+	Time: 7.179817
+NEOPT SOLVER
+TEST 5
+	Time: 11.169366
+Checking if ERROR < 0.001...:
+Test1:
+SUCCESS!
+Test2:
+SUCCESS!
+Test3:
+SUCCESS!
+Test4:
+SUCCESS!
+Test5:
+SUCCESS!
+-----BLAS-----
+BLAS SOLVER
+TEST 1
+	Time: 0.516744
+BLAS SOLVER
+TEST 2
+	Time: 0.882538
+BLAS SOLVER
+TEST 3
+	Time: 1.386519
+BLAS SOLVER
+TEST 4
+	Time: 2.061663
+BLAS SOLVER
+TEST 5
+	Time: 2.882684
+Checking if ERROR < 0.001...:
+Test1:
+SUCCESS!
+Test2:
+SUCCESS!
+Test3:
+SUCCESS!
+Test4:
+SUCCESS!
+Test5:
+SUCCESS!
+-----NEOPT-----
+NEOPT SOLVER
+TEST 1
+	Time: 11.140350
+NEOPT SOLVER
+TEST 2
+	Time: 19.496628
+NEOPT SOLVER
+TEST 3
+	Time: 30.501209
+NEOPT SOLVER
+TEST 4
+	Time: 45.480934
+NEOPT SOLVER
+TEST 5
+	Time: 65.814354
+Checking if ERROR < 0.001...:
+Test1:
+SUCCESS!
+Test2:
+SUCCESS!
+Test3:
+SUCCESS!
+Test4:
+SUCCESS!
+Test5:
+SUCCESS!

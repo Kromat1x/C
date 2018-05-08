@@ -1,0 +1,23 @@
+Bînă Marius Andrei - bina.marius@gmail.com
+
+Organizarea temei se bazeaza pe doua structuri:
+- Word  - reprezinta practic o celula din tabel
+		- contine un o valoare de tip char* si pointer catre urmatoarea celula din bucket
+
+- Table - reprezinta practic tabelul
+		- contine un vector de pointeri la Word, practic vectorul de indexare in tabel dupa cheie
+		
+Instructiunile sunt citite fie de la tastatura, fie de la stdin si sunt trimise linie cu linie
+catre functia de executie a unei comenzi asupra tabelului. 
+Comenzile sunt:
+	- add - calculeaza cheia cuvantului de adaugat si cauta in bucketul indexat la cheia respectiva
+			daca nu exista deja cuvantul, atunci el este adaugat
+	- remove - calculeaza cheia cuvantului de elimint si cauta in bucketul indexat la cheia respectiva
+				si apoi celula este eliminata, eliberata si legaturile se updateaza
+	- clear - elibereaza celulele tabelei
+	- resize double/halve - se redimensioneaza tabelul, practic se creeaza unul nou si cel vechi e parcurs si
+							toate elementele din el sunt adaugate in tabelul nou
+	- find - calculeaza cheia cuvantului de elimint si cauta in bucketul indexat la cheia respectiva
+			si apoi cauta cuvantul in bucketul respectiv, daca il gaseste atunci rezultatul va fi True
+			in caz contrar va fi false
+	- print/print_bucket - printare tabel / printare bucket specificat
